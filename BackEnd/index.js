@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 var bodyParser = require('body-parser');
 const app = express();
+const PORT = process.env.PORT || 5000
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({            //此项必须在 bodyParser.json 下面,为参数编码
@@ -16,25 +17,8 @@ app.use(function(req, res, next) {
 });
 
 app.get('/api/users', (req, res) => {
-  let search = req.query.search;
-  let sortArea = req.query.sortArea;
-  let sortFunc = req.query.sortFunc;
-  let page = req.query.page;
-  const reg = new RegExp(search,'i');
   User
-    .find({
-      $or : [ //多条件，数组
-        {Name : {$regex : reg}},
-        {Sex : {$regex : reg}},
-        {StartDate : {$regex : reg}},
-        {Rank : {$regex : reg}},
-        {Phone : {$regex : reg}},
-        {Email : {$regex : reg}}
-        ]
-      })
-    .limit(page*5)
-    .sort([[sortArea, sortFunc]])
-    .sort([["_id",-1]])
+    .find()
     .exec((err, user) => {
       if (err) {
         res.status(500).json(err);
@@ -48,25 +32,32 @@ app.get('/api/users', (req, res) => {
 
 app.put('/api/users/:id/DS', (req, res) => {
 	let userId = req.params.id;
-	User.findByIdAndUpdate(userId, { $push: { DS: req.body.id}}, (err, user) => {
+	User.findByIdAndUpdate(userId, req.body, (err, user) => {
 		if (err) {
 			res.status(500).json(err);
 		}
 		else {
-			res.status(200).json(user);
+      res.status(200).json(user);//返回旧的user
 		}
 	});
 });
 
 app.post('/api/users', (req, res) => {
+  User.createIndexes(userSchema.index({ "createdAt": new Date() }, { expires: req.body.Period }), function(err, info){
+    if(err) console.error(err);
+    console.info(info);
+});
+  req.body.createdAt = new Date();
 	let createPromise = User.create(req.body);
   createPromise.then(() => {
     User
       .find(req.body, (err, user) => {
         res.status(200).json(user[user.length - 1]._id);
       })
-  });
+  })
+  .catch((err) => {console.log(err)});
 });
+
 app.delete('/api/users/:id', (req, res) => {
 	let userId = req.params.id;
 	User.findByIdAndDelete(userId, (err, user) => {
@@ -84,8 +75,8 @@ app.delete('/api/users/:id', (req, res) => {
 
 
 
-app.listen(8888, () => 
-                    console.log('Listening on port 8888!')
+app.listen(PORT, () => 
+                    console.log(`Listening on port ${PORT}`)
                 );
 
 // connect
@@ -104,7 +95,9 @@ var userSchema = new Schema({
   Password:String,
   FriendID:String,
   NorthSouth:String,
-  OpenTime:String
+  createdAt:Date,
+  Period:Number,
+  TimeZone:String
 });
 // get persistent class
-const User = mongoose.model("user",userSchema,'Army');
+const User = mongoose.model("user",userSchema,'Users');
