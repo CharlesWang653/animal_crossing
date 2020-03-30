@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/animal_crossing/static/css/main.5f361e03.chunk.css",
-    "main.js": "/animal_crossing/static/js/main.c4e0c93e.chunk.js",
-    "main.js.map": "/animal_crossing/static/js/main.c4e0c93e.chunk.js.map",
+    "main.js": "/animal_crossing/static/js/main.4e6ea1ef.chunk.js",
+    "main.js.map": "/animal_crossing/static/js/main.4e6ea1ef.chunk.js.map",
     "runtime-main.js": "/animal_crossing/static/js/runtime-main.14e502ee.js",
     "runtime-main.js.map": "/animal_crossing/static/js/runtime-main.14e502ee.js.map",
-    "static/js/2.d3c3f148.chunk.js": "/animal_crossing/static/js/2.d3c3f148.chunk.js",
-    "static/js/2.d3c3f148.chunk.js.map": "/animal_crossing/static/js/2.d3c3f148.chunk.js.map",
+    "static/js/2.c8dfc9f5.chunk.js": "/animal_crossing/static/js/2.c8dfc9f5.chunk.js",
+    "static/js/2.c8dfc9f5.chunk.js.map": "/animal_crossing/static/js/2.c8dfc9f5.chunk.js.map",
     "index.html": "/animal_crossing/index.html",
-    "precache-manifest.013b50ecaf5211d664d610dcef19fd92.js": "/animal_crossing/precache-manifest.013b50ecaf5211d664d610dcef19fd92.js",
+    "precache-manifest.09037020ee1ebafa047ff42c851de4a3.js": "/animal_crossing/precache-manifest.09037020ee1ebafa047ff42c851de4a3.js",
     "service-worker.js": "/animal_crossing/service-worker.js",
     "static/css/main.5f361e03.chunk.css.map": "/animal_crossing/static/css/main.5f361e03.chunk.css.map",
-    "static/js/2.d3c3f148.chunk.js.LICENSE.txt": "/animal_crossing/static/js/2.d3c3f148.chunk.js.LICENSE.txt",
+    "static/js/2.c8dfc9f5.chunk.js.LICENSE.txt": "/animal_crossing/static/js/2.c8dfc9f5.chunk.js.LICENSE.txt",
     "static/media/logo.svg": "/animal_crossing/static/media/logo.5d5d9eef.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.14e502ee.js",
-    "static/js/2.d3c3f148.chunk.js",
+    "static/js/2.c8dfc9f5.chunk.js",
     "static/css/main.5f361e03.chunk.css",
-    "static/js/main.c4e0c93e.chunk.js"
+    "static/js/main.4e6ea1ef.chunk.js"
   ]
 }

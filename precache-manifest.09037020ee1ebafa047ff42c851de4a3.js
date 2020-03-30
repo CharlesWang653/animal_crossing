@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "352c5977e5db2f5462b09423239fb0f6",
+    "revision": "9997950050a6e20b1c18a5143cbccb6d",
     "url": "/animal_crossing/index.html"
   },
   {
-    "revision": "ec852a661271207f6157",
+    "revision": "3ad5c00848abef6d89cd",
     "url": "/animal_crossing/static/css/main.5f361e03.chunk.css"
   },
   {
-    "revision": "2aca68b59a5c5a694f05",
-    "url": "/animal_crossing/static/js/2.d3c3f148.chunk.js"
+    "revision": "beb076fd53faa5a66d63",
+    "url": "/animal_crossing/static/js/2.c8dfc9f5.chunk.js"
   },
   {
     "revision": "e88a3e95b5364d46e95b35ae8c0dc27d",
-    "url": "/animal_crossing/static/js/2.d3c3f148.chunk.js.LICENSE.txt"
+    "url": "/animal_crossing/static/js/2.c8dfc9f5.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "ec852a661271207f6157",
-    "url": "/animal_crossing/static/js/main.c4e0c93e.chunk.js"
+    "revision": "3ad5c00848abef6d89cd",
+    "url": "/animal_crossing/static/js/main.4e6ea1ef.chunk.js"
   },
   {
     "revision": "bc0a0e2b57d48af3897b",
