@@ -144,10 +144,10 @@ class TurnipInfo extends Component {
           </Col>
           <Col span={4}>
             <Space>
-              <Tooltip title="help">
+              <Tooltip title="使用说明">
                 <Button type="primary" shape="circle" icon={<QuestionOutlined />} onClick={this.handleHelpClick} />
               </Tooltip>
-              <Tooltip title="contact">
+              <Tooltip title="联系我们">
                 <Button type="primary" shape="circle" icon={<InfoOutlined />} onClick={this.handleInfoClick} />
               </Tooltip>
               <CreateModal visible={this.state.isCreateModalOpen} handleClick={this.handleCreateClick} handleSuccess={this.handleSuccess} />

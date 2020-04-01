@@ -34,7 +34,9 @@ class CreateModal extends Component {
     
     let pwRegEx = /([0-9A-Z]){5}/g;
     if (password.length !== 5 || !pwRegEx.test(password.toUpperCase())) {
-      checkErr.push(<Alert message="上岛密码错误" type="warning" showIcon/>);
+      if (password.length !== 0) {
+        checkErr.push(<Alert message="上岛密码错误" type="warning" showIcon/>);
+      }
     }
 
     let fcRegEx = /[0-9]{12}/g;
@@ -89,7 +91,7 @@ class CreateModal extends Component {
         <>
             <Modal
               maskClosable={false}
-              title="Create New Record"
+              title="添加新记录"
               visible={this.props.visible}
               onOk={this.props.handleClick}
               onCancel={this.props.handleClick}
@@ -114,7 +116,7 @@ class CreateModal extends Component {
                 <Form.Item required={true} label="大头菜价格">
                   <Input name="price" onChange={this.handleChange} value={this.state.userInput.price}/>
                 </Form.Item>
-                <Form.Item required={true} label="上岛密码">
+                <Form.Item label="上岛密码">
                   <Input name="password" onChange={this.handleChange} value={this.state.userInput.password}/>
                 </Form.Item>
                 <Form.Item label="水果类型">
@@ -135,7 +137,7 @@ class CreateModal extends Component {
                     <Select.Option value="South">南半球</Select.Option>
                   </Select>
                 </Form.Item>
-                <Form.Item required={true} label="开岛时长">
+                <Form.Item required={true} label="价格有效时长">
                   <Space>
                     <InputNumber min="0" max="10" name="hour" onChange={this.handleHourChange} value={this.state.userInput.hour}/>
                     小时
