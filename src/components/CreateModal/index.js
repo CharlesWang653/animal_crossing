@@ -1,28 +1,74 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input, Select, InputNumber } from 'antd';
+import { Modal, Button, Form, Input, Select, InputNumber, Alert, Space } from 'antd';
 import { addOne } from "../../RESTfulAPI"
 
 class CreateModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userInput:{ name:"", price:0, password:"", fruit:"", friendCode:"", northSouth:"", hour:0, minute:0 }
+      userInput:{ name:"", price:0, password:"", fruit:"", friendCode:"", northSouth:"", hour:0, minute:0 },
+      errMessage: []
     }
   }
 
   handleSubmit = () => {
-    const{name, price, password, fruit, friendCode, northSouth, hour, minute} = this.state.userInput;
+    const {name, price, password, fruit, friendCode, northSouth, hour, minute} = this.state.userInput;
     var totalmin = Number(hour)*60 + Number(minute);
     var user = {IslandName:name,
       TurnipPrice:price,
-      Password:password,
+      Password:password.toUpperCase(),
       FruitType:fruit,
       FriendID:friendCode,
       NorthSouth:northSouth,
-      Period:totalmin}
-    addOne(user);
-    this.props.handleClick();
+      Period:totalmin};
+    
+    let checkErr = [];
+
+    if (name.length > 15) {
+      checkErr.push(<Alert message="岛名过长" type="warning" showIcon/>);
+    }
+    
+    if (Number(price) <= 0 || Number(price) > 1000 || Number(price) === NaN) {
+      checkErr.push(<Alert message="价格过低或过高" type="warning" showIcon/>);
+    }
+    
+    let pwRegEx = /([0-9A-Z]){5}/g;
+    if (password.length !== 5 || !pwRegEx.test(password.toUpperCase())) {
+      checkErr.push(<Alert message="上岛密码错误" type="warning" showIcon/>);
+    }
+
+    let fcRegEx = /[0-9]{12}/g;
+    if (friendCode.length !== 12 || !fcRegEx.test(friendCode)) {
+      if (friendCode.length !== 0) {
+        checkErr.push(<Alert message="好友码错误" type="warning" showIcon/>);
+      }
+    }
+
+    if (totalmin === NaN || totalmin === 0) {
+      checkErr.push(<Alert message="时长不能为0" type="warning" showIcon/>);
+    }
+
+    this.setState({errMessage: checkErr});
+
+    if (!checkErr.length) {
+      addOne(user)
+      .then(res => {
+        this.props.handleSuccess();
+        this.props.handleClick();
+      })
+      .catch(err => {
+        this.setState({
+          errMessage: <Alert 
+                        message="警告"
+                        description="访问后台数据出错，请稍后再试"
+                        type="error"
+                        closable
+                        showIcon />
+        })
+      });
+    }
   }
+
   handleChange = (e) => {
     this.setState({userInput:{...this.state.userInput,[e.target.name]: e.target.value}});
   }
@@ -47,6 +93,7 @@ class CreateModal extends Component {
               visible={this.props.visible}
               onOk={this.props.handleClick}
               onCancel={this.props.handleClick}
+              width={600}
               footer={[
                   <Button key="goBack" onClick={this.props.handleClick}>Cancel</Button>,
                   <Button key="submit" type="primary" onClick={this.handleSubmit}>Submit</Button>
@@ -54,7 +101,7 @@ class CreateModal extends Component {
             >
               <Form
                 labelCol={{
-                  span: 4,
+                  span: 7,
                 }}
                 wrapperCol={{
                   span: 14,
@@ -64,10 +111,10 @@ class CreateModal extends Component {
                 <Form.Item label="岛名">
                   <Input name="name" onChange={this.handleChange} value={this.state.userInput.name}/>
                 </Form.Item>
-                <Form.Item label="大头菜价格">
+                <Form.Item required={true} label="大头菜价格">
                   <Input name="price" onChange={this.handleChange} value={this.state.userInput.price}/>
                 </Form.Item>
-                <Form.Item label="上岛密码">
+                <Form.Item required={true} label="上岛密码">
                   <Input name="password" onChange={this.handleChange} value={this.state.userInput.password}/>
                 </Form.Item>
                 <Form.Item label="水果类型">
@@ -80,7 +127,7 @@ class CreateModal extends Component {
                 </Select>
                 </Form.Item>
                 <Form.Item label="好友码">
-                  <Input name="friendCode" onChange={this.handleChange} value={this.state.userInput.friendCode}/>
+                  <Input name="friendCode" addonBefore="SW -" onChange={this.handleChange} value={this.state.userInput.friendCode}/>
                 </Form.Item>
                 <Form.Item label="南/北半球">
                   <Select name="northSouth" onChange={this.handleNSChange} value={this.state.userInput.northSouth}>
@@ -88,16 +135,19 @@ class CreateModal extends Component {
                     <Select.Option value="South">南半球</Select.Option>
                   </Select>
                 </Form.Item>
-                <Form.Item label="开岛时长">
-                  <InputNumber min="0" name="hour" onChange={this.handleHourChange} value={this.state.userInput.hour}/>
-                  小时
-                  <Select name="minute" onChange={this.handleMinuteChange} value={this.state.userInput.minute}>
-                    <Select.Option value="0">0</Select.Option>
-                    <Select.Option value="30">30</Select.Option>
-                  </Select>
-                  分钟
+                <Form.Item required={true} label="开岛时长">
+                  <Space>
+                    <InputNumber min="0" max="10" name="hour" onChange={this.handleHourChange} value={this.state.userInput.hour}/>
+                    小时
+                    <Select name="minute" style={{width: 120}} onChange={this.handleMinuteChange} value={this.state.userInput.minute}>
+                      <Select.Option value="0">0</Select.Option>
+                      <Select.Option value="30">30</Select.Option>
+                    </Select>
+                    分钟
+                  </Space>
                 </Form.Item>
               </Form>
+              {this.state.errMessage}
             </Modal>
         </>
     );

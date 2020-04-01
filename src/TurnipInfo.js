@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Table, Row, Col, Button, Tooltip, PageHeader, Space } from 'antd';
+import { Table, Row, Col, Button, Tooltip, PageHeader, Space, Spin, Alert } from 'antd';
 import { QuestionOutlined, InfoOutlined, PlusOutlined} from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
 import CreateModal from "./components/CreateModal";
 import HelpModal from "./components/HelpModal";
 import InfoModal from "./components/InfoModal";
+import { getAll } from "./RESTfulAPI";
 
 class TurnipInfo extends Component {
   constructor(props) {
@@ -13,8 +14,29 @@ class TurnipInfo extends Component {
     this.state = {
       isCreateModalOpen: false,
       isHelpModalOpen: false,
-      isInfoModalOpen: false
+      isInfoModalOpen: false,
+      data: [],
+      pending: true,
+      messageHolder: "",
     }
+  }
+
+  componentDidMount() {
+    getAll
+      .then((res) => {
+        this.setState({data: res, pending: false});
+      })
+      .catch(err => {
+        this.setState({
+          pending: false,
+          messageHolder: <Alert 
+                        message="警告"
+                        description="访问后台数据出错，请稍后再试"
+                        type="error"
+                        closable
+                        showIcon />
+        })
+      })
   }
 
   handleCreateClick = () => {
@@ -27,6 +49,17 @@ class TurnipInfo extends Component {
 
   handleInfoClick = () => {
     this.setState({isInfoModalOpen: !this.state.isInfoModalOpen});
+  }
+
+  handleSuccess = () => {
+    this.setState({
+      messageHolder: <Alert
+                      message="新建成功"
+                      description="新建数据成功！请刷新页面查看。"
+                      type="success"
+                      closable
+                      showIcon />
+    });
   }
 
   render() {
@@ -51,23 +84,23 @@ class TurnipInfo extends Component {
         filters: [
           {
             text: '桃子',
-            value: 'PEACH',
+            value: '桃子',
           },
           {
             text: '梨',
-            value: 'PEAR',
+            value: '梨',
           },
           {
             text: '苹果',
-            value: 'APPLE',
+            value: '苹果',
           },
           {
             text: '橘子',
-            value: 'ORANGE',
+            value: '橘子',
           },
           {
             text: '樱桃',
-            value: 'CHERRY',
+            value: '樱桃',
           }
         ],
         filterMultiple: true,
@@ -83,127 +116,17 @@ class TurnipInfo extends Component {
         filters: [
           {
             text: '南半球',
-            value: 'North',
+            value: '南半球',
           },
           {
             text: '北半球',
-            value: 'South',
+            value: '北半球',
           }
         ],
         filterMultiple: false,
         onFilter: (value, record) => record.NorthSouth.indexOf(value) === 0,
       }
     ];
-
-    const data = [
-      {
-        IslandName: 'Mia',
-        TurnipPrice: 600,
-        Password: 'SWJ5D',
-        FruitType: 'PEACH',
-        FriendID: '1111-1111-1111',
-        NorthSouth: 'North',
-        Period: '3600',
-      },
-      {
-        IslandName: 'Mia',
-        TurnipPrice: 500,
-        Password: 'SWJ5D',
-        FruitType: 'PEAR',
-        FriendID: '1111-1111-1111',
-        NorthSouth: 'North',
-        Period: '3600',
-      },
-      {
-        IslandName: 'Mia',
-        TurnipPrice: 600,
-        Password: 'SWJ5D',
-        FruitType: 'PEACH',
-        FriendID: '1111-1111-1111',
-        NorthSouth: 'North',
-        Period: '3600',
-      },
-      {
-        IslandName: 'Mia',
-        TurnipPrice: 600,
-        Password: 'SWJ5D',
-        FruitType: 'PEACH',
-        FriendID: '1111-1111-1111',
-        NorthSouth: 'North',
-        Period: '3600',
-      },
-      {
-        IslandName: 'Mia',
-        TurnipPrice: 600,
-        Password: 'SWJ5D',
-        FruitType: 'PEACH',
-        FriendID: '1111-1111-1111',
-        NorthSouth: 'North',
-        Period: '3600',
-      },
-      {
-        IslandName: 'Mia',
-        TurnipPrice: 600,
-        Password: 'SWJ5D',
-        FruitType: 'PEACH',
-        FriendID: '1111-1111-1111',
-        NorthSouth: 'North',
-        Period: '3600',
-      },{
-        IslandName: 'Mia',
-        TurnipPrice: 600,
-        Password: 'SWJ5D',
-        FruitType: 'PEACH',
-        FriendID: '1111-1111-1111',
-        NorthSouth: 'North',
-        Period: '3600',
-      },
-      {
-        IslandName: 'Mia',
-        TurnipPrice: 600,
-        Password: 'SWJ5D',
-        FruitType: 'PEACH',
-        FriendID: '1111-1111-1111',
-        NorthSouth: 'North',
-        Period: '3600',
-      },
-      {
-        IslandName: 'Mia',
-        TurnipPrice: 600,
-        Password: 'SWJ5D',
-        FruitType: 'PEACH',
-        FriendID: '1111-1111-1111',
-        NorthSouth: 'North',
-        Period: '3600',
-      },
-      {
-        IslandName: 'Mia',
-        TurnipPrice: 600,
-        Password: 'SWJ5D',
-        FruitType: 'PEACH',
-        FriendID: '1111-1111-1111',
-        NorthSouth: 'North',
-        Period: '3600',
-      },
-      {
-        IslandName: 'Mia',
-        TurnipPrice: 600,
-        Password: 'SWJ5D',
-        FruitType: 'PEACH',
-        FriendID: '1111-1111-1111',
-        NorthSouth: 'North',
-        Period: '3600',
-      },
-      {
-        IslandName: 'Mia',
-        TurnipPrice: 600,
-        Password: 'SWJ5D',
-        FruitType: 'PEACH',
-        FriendID: '1111-1111-1111',
-        NorthSouth: 'North',
-        Period: '3600',
-      }
-    ]
 
     return (
       <>
@@ -215,7 +138,7 @@ class TurnipInfo extends Component {
         </Row>
         <Row>
           <Col span={2} offset={18}>
-            <Tooltip title="add new record">
+            <Tooltip title="添加">
               <Button type="primary" shape="circle" icon={<PlusOutlined />} onClick={this.handleCreateClick} />
             </Tooltip>
           </Col>
@@ -227,7 +150,7 @@ class TurnipInfo extends Component {
               <Tooltip title="contact">
                 <Button type="primary" shape="circle" icon={<InfoOutlined />} onClick={this.handleInfoClick} />
               </Tooltip>
-              <CreateModal visible={this.state.isCreateModalOpen} handleClick={this.handleCreateClick} />
+              <CreateModal visible={this.state.isCreateModalOpen} handleClick={this.handleCreateClick} handleSuccess={this.handleSuccess} />
               <HelpModal visible={this.state.isHelpModalOpen} handleClick={this.handleHelpClick} />
               <InfoModal visible={this.state.isInfoModalOpen} handleClick={this.handleInfoClick} />
             </Space>
@@ -235,7 +158,13 @@ class TurnipInfo extends Component {
         </Row>
         <Row>
           <Col span={16} offset={4}>
-            <Table columns={columns} dataSource={data} pagination={{ pageSize: 25 }} />
+            {this.state.messageHolder}
+            {this.state.pending ?
+              <div style={{textAlign: "center"}}>
+                <Spin size="large" />
+              </div>
+              : <Table columns={columns} dataSource={this.state.data} pagination={{ pageSize: 25 }} />
+          }            
           </Col>
         </Row>
       </>
