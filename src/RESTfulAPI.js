@@ -56,14 +56,3 @@ export const addOne = (user) => {
       })
   })
 }
-
-
-// export const addOne = (user) => {
-//   axios.post("https://sheltered-dusk-56497.herokuapp.com/api/users",user)
-//     .then(res => {
-//       return res;
-//     })
-//     .catch(err => {
-//       return err;
-//     })
-// }
