@@ -28,7 +28,7 @@ class CreateModal extends Component {
       checkErr.push(<Alert message="岛名过长" type="warning" showIcon/>);
     }
     
-    if (Number(price) <= 0 || Number(price) > 1000 || Number(price) === NaN) {
+    if (Number(price) <= 0 || Number(price) > 1000 || isNaN(Number(price))) {
       checkErr.push(<Alert message="价格过低或过高" type="warning" showIcon/>);
     }
     
@@ -46,7 +46,7 @@ class CreateModal extends Component {
       }
     }
 
-    if (totalmin === NaN || totalmin === 0) {
+    if (isNaN(totalmin) || totalmin === 0) {
       checkErr.push(<Alert message="时长不能为0" type="warning" showIcon/>);
     }
 

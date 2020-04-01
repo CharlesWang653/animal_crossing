@@ -26,6 +26,8 @@ export const getAll = new Promise((resolve, reject) => {
             case "CHERRY":
               temp.FruitType = "樱桃";
               break;
+            default:
+              break;
           }
           temp.FriendID = o.FriendID;
           switch(o.NorthSouth) {
@@ -34,6 +36,8 @@ export const getAll = new Promise((resolve, reject) => {
               break;
             case "South":
               temp.NorthSouth = "南半球";
+              break;
+            default:
               break;
           }
           data.push(temp);
