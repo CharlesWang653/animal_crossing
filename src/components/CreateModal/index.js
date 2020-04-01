@@ -1,25 +1,16 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
 import { Modal, Button, Form, Input, Select, InputNumber } from 'antd';
 import { addOne } from "../../RESTfulAPI"
-=======
-import { Modal, Button } from 'antd';
->>>>>>> 05cae47f9466c952b0b3ccd3f3f0d72fbaf30d7c
 
 class CreateModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-<<<<<<< HEAD
       userInput:{ name:"", price:0, password:"", fruit:"", friendCode:"", northSouth:"", hour:0, minute:0 }
-=======
-
->>>>>>> 05cae47f9466c952b0b3ccd3f3f0d72fbaf30d7c
     }
   }
 
   handleSubmit = () => {
-<<<<<<< HEAD
     const{name, price, password, fruit, friendCode, northSouth, hour, minute} = this.state.userInput;
     var totalmin = Number(hour)*60 + Number(minute);
     var user = {IslandName:name,
@@ -47,19 +38,11 @@ class CreateModal extends Component {
   handleMinuteChange = (e) => {
     this.setState({userInput:{...this.state.userInput,minute: e}});
   }
-=======
-      alert("clicked submit!");
-  }
-
->>>>>>> 05cae47f9466c952b0b3ccd3f3f0d72fbaf30d7c
   render() {
     return (
         <>
             <Modal
-<<<<<<< HEAD
               maskClosable={false}
-=======
->>>>>>> 05cae47f9466c952b0b3ccd3f3f0d72fbaf30d7c
               title="Create New Record"
               visible={this.props.visible}
               onOk={this.props.handleClick}
@@ -69,7 +52,6 @@ class CreateModal extends Component {
                   <Button key="submit" type="primary" onClick={this.handleSubmit}>Submit</Button>
               ]}
             >
-<<<<<<< HEAD
               <Form
                 labelCol={{
                   span: 4,
@@ -116,9 +98,6 @@ class CreateModal extends Component {
                   分钟
                 </Form.Item>
               </Form>
-=======
-              <p>some form</p>
->>>>>>> 05cae47f9466c952b0b3ccd3f3f0d72fbaf30d7c
             </Modal>
         </>
     );
