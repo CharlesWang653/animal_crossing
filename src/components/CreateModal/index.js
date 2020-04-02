@@ -6,21 +6,15 @@ class CreateModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userInput:{ name:"", price:0, password:"", fruit:"", friendCode:"", northSouth:"", hour:0, minute:0 },
+      userInput:{ name:"", price:0, password:"", fruit:"", friendCode:"", northSouth:"", hour:0, minute:0, comment: "" },
       errMessage: []
     }
   }
 
   handleSubmit = () => {
-    const {name, price, password, fruit, friendCode, northSouth, hour, minute} = this.state.userInput;
+    const {name, price, password, fruit, friendCode, northSouth, hour, minute, comment} = this.state.userInput;
     var totalmin = Number(hour)*60 + Number(minute);
-    var user = {IslandName:name,
-      TurnipPrice:price,
-      Password:password.toUpperCase(),
-      FruitType:fruit,
-      FriendID:friendCode,
-      NorthSouth:northSouth,
-      Period:totalmin};
+    var user = { IslandName:name, TurnipPrice:price, Password:password.toUpperCase(), FruitType:fruit, FriendID:friendCode, NorthSouth:northSouth, Period:totalmin, Comment:comment};
     
     let checkErr = [];
 
@@ -48,6 +42,10 @@ class CreateModal extends Component {
 
     if (isNaN(totalmin) || totalmin === 0) {
       checkErr.push(<Alert message="时长不能为0" type="warning" showIcon/>);
+    }
+
+    if (comment.length > 200) {
+      checkErr.push(<Alert message="备注文字超过200" type="warning" showIcon/>);
     }
 
     this.setState({errMessage: checkErr});
@@ -116,6 +114,17 @@ class CreateModal extends Component {
                 <Form.Item required={true} label="大头菜价格">
                   <Input name="price" onChange={this.handleChange} value={this.state.userInput.price}/>
                 </Form.Item>
+                <Form.Item required={true} label="价格有效时长">
+                  <Space>
+                    <InputNumber min="0" max="10" name="hour" onChange={this.handleHourChange} value={this.state.userInput.hour}/>
+                    小时
+                    <Select name="minute" style={{width: 120}} onChange={this.handleMinuteChange} value={this.state.userInput.minute}>
+                      <Select.Option value="0">0</Select.Option>
+                      <Select.Option value="30">30</Select.Option>
+                    </Select>
+                    分钟
+                  </Space>
+                </Form.Item>
                 <Form.Item label="上岛密码">
                   <Input name="password" onChange={this.handleChange} value={this.state.userInput.password}/>
                 </Form.Item>
@@ -128,25 +137,17 @@ class CreateModal extends Component {
                   <Select.Option value="CHERRY">樱桃</Select.Option>
                 </Select>
                 </Form.Item>
-                <Form.Item label="好友码">
-                  <Input name="friendCode" addonBefore="SW -" onChange={this.handleChange} value={this.state.userInput.friendCode}/>
-                </Form.Item>
                 <Form.Item label="南/北半球">
                   <Select name="northSouth" onChange={this.handleNSChange} value={this.state.userInput.northSouth}>
                     <Select.Option value="North">北半球</Select.Option>
                     <Select.Option value="South">南半球</Select.Option>
                   </Select>
                 </Form.Item>
-                <Form.Item required={true} label="价格有效时长">
-                  <Space>
-                    <InputNumber min="0" max="10" name="hour" onChange={this.handleHourChange} value={this.state.userInput.hour}/>
-                    小时
-                    <Select name="minute" style={{width: 120}} onChange={this.handleMinuteChange} value={this.state.userInput.minute}>
-                      <Select.Option value="0">0</Select.Option>
-                      <Select.Option value="30">30</Select.Option>
-                    </Select>
-                    分钟
-                  </Space>
+                <Form.Item label="好友码">
+                  <Input name="friendCode" addonBefore="SW -" onChange={this.handleChange} value={this.state.userInput.friendCode}/>
+                </Form.Item>
+                <Form.Item label="备注">
+                  <Input.TextArea row={4} name="comment" onChange={this.handleChange} value={this.state.userInput.comment} />
                 </Form.Item>
               </Form>
               {this.state.errMessage}

@@ -67,16 +67,19 @@ class TurnipInfo extends Component {
       {
         title: '岛名',
         dataIndex: 'IslandName',
+        width: '10%'
       },
       {
         title: '大头菜价格',
         dataIndex: 'TurnipPrice',
         defaultSortOrder: 'descend',
         sorter: (a, b) => a.TurnipPrice - b.TurnipPrice,
+        width: '8%'
       },
       {
         title: '上岛密码',
         dataIndex: 'Password',
+        width: '8%'
       },
       {
         title: '本地水果',
@@ -105,10 +108,12 @@ class TurnipInfo extends Component {
         ],
         filterMultiple: true,
         onFilter: (value, record) => record.FruitType.indexOf(value) === 0,
+        width: '8%'
       },
       {
         title: '好友码',
-        dataIndex: 'FriendID'
+        dataIndex: 'FriendID',
+        width: '10%'
       },
       {
         title: '地理位置',
@@ -125,6 +130,11 @@ class TurnipInfo extends Component {
         ],
         filterMultiple: false,
         onFilter: (value, record) => record.NorthSouth.indexOf(value) === 0,
+        width: '10%'
+      },
+      {
+        title: '备注',
+        dataIndex: 'Comment',
       }
     ];
 
@@ -157,7 +167,7 @@ class TurnipInfo extends Component {
           </Col>
         </Row>
         <Row>
-          <Col span={16} offset={4}>
+          <Col span={20} offset={2}>
             {this.state.messageHolder}
             {this.state.pending ?
               <div style={{textAlign: "center"}}>

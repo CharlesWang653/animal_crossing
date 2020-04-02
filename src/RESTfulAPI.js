@@ -40,6 +40,7 @@ export const getAll = new Promise((resolve, reject) => {
             default:
               break;
           }
+          temp.Comment = o.Comment;
           data.push(temp);
         });
       return resolve(data);
